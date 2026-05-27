@@ -1,16 +1,11 @@
 <?php
 
-<<<<<<< HEAD
-=======
 use App\Http\Controllers\ProfileController;
->>>>>>> e84b764 (Menambahkan rute otentikasi, perintah konsol, dan kasus uji awal)
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
-<<<<<<< HEAD
-=======
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -23,4 +18,3 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
->>>>>>> e84b764 (Menambahkan rute otentikasi, perintah konsol, dan kasus uji awal)
