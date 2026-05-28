@@ -16,6 +16,7 @@ class Outlet extends Model
         return $this->hasMany(Menu::class);
     }
 
+
     public function orders()
     {
         return $this->hasMany(Order::class);
