@@ -9,7 +9,11 @@ import { bunny } from 'laravel-vite-plugin/fonts';
 import tailwindcss from '@tailwindcss/vite';
 =======
 >>>>>>> cd1aac3ff3eb328e01c7ec3a7a1c81eba9d6d37f
+<<<<<<< HEAD
 >>>>>>> friend-repo/main
+=======
+>>>>>>> 43b70fe15192ffe77de4cb776a49bd82a85fc629
+>>>>>>> 3abcfe4cede430b0b2dc1e5e423bb33d0da8224f
 
 export default defineConfig({
     plugins: [
@@ -19,7 +23,11 @@ export default defineConfig({
 <<<<<<< HEAD
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> friend-repo/main
+=======
+>>>>>>> 43b70fe15192ffe77de4cb776a49bd82a85fc629
+>>>>>>> 3abcfe4cede430b0b2dc1e5e423bb33d0da8224f
             fonts: [
                 bunny('Instrument Sans', {
                     weights: [400, 500, 600],
@@ -39,5 +47,9 @@ export default defineConfig({
         }),
     ],
 >>>>>>> cd1aac3ff3eb328e01c7ec3a7a1c81eba9d6d37f
+<<<<<<< HEAD
 >>>>>>> friend-repo/main
+=======
+>>>>>>> 43b70fe15192ffe77de4cb776a49bd82a85fc629
+>>>>>>> 3abcfe4cede430b0b2dc1e5e423bb33d0da8224f
 });
