@@ -10,7 +10,11 @@
 <<<<<<< HEAD
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> friend-repo/main
+=======
 >>>>>>> 43b70fe15192ffe77de4cb776a49bd82a85fc629
+>>>>>>> 3abcfe4cede430b0b2dc1e5e423bb33d0da8224f
         "@tailwindcss/vite": "^4.0.0",
         "concurrently": "^9.0.1",
         "laravel-vite-plugin": "^3.1",
@@ -27,7 +31,11 @@
         "postcss": "^8.4.31",
         "tailwindcss": "^3.1.0",
 >>>>>>> cd1aac3ff3eb328e01c7ec3a7a1c81eba9d6d37f
+<<<<<<< HEAD
+>>>>>>> friend-repo/main
+=======
 >>>>>>> 43b70fe15192ffe77de4cb776a49bd82a85fc629
+>>>>>>> 3abcfe4cede430b0b2dc1e5e423bb33d0da8224f
         "vite": "^8.0.0"
     }
 }
