@@ -1,5 +1,4 @@
 <?php
-git push origin main
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
