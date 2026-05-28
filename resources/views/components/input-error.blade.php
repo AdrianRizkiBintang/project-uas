@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @props(['messages'])
 
 @if ($messages)
@@ -6,4 +7,12 @@
             <li>{{ $message }}</li>
         @endforeach
     </ul>
+=======
+﻿@if ($messages)
+<ul class="form-error">
+    @foreach ((array) $messages as $message)
+        <li>{{ $message }}</li>
+    @endforeach
+</ul>
+>>>>>>> 65b90b2f919fd62cef96302c70bf2e394d257722
 @endif

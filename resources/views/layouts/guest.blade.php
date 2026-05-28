@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<<<<<<< HEAD
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,4 +28,24 @@
             </div>
         </div>
     </body>
+=======
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>{{ config('app.name', 'FoodOrder') }}</title>
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<div class="guest-page">
+    <div class="guest-logo">
+        <div class="logo-text">{{ config('app.name', 'FoodOrder') }}</div>
+        <div class="logo-sub">Pesan makanan favoritmu</div>
+    </div>
+    <div class="guest-card">
+        {{ $slot }}
+    </div>
+</div>
+</body>
+>>>>>>> 65b90b2f919fd62cef96302c70bf2e394d257722
 </html>

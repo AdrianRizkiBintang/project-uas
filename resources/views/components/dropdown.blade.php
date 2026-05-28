@@ -1,6 +1,7 @@
 @props(['align' => 'right', 'width' => '48', 'contentClasses' => 'py-1 bg-white'])
 
 @php
+<<<<<<< HEAD
 $alignmentClasses = match ($align) {
     'left' => 'ltr:origin-top-left rtl:origin-top-right start-0',
     'top' => 'origin-top',
@@ -11,6 +12,26 @@ $width = match ($width) {
     '48' => 'w-48',
     default => $width,
 };
+=======
+switch ($align) {
+    case 'left':
+        $alignmentClasses = 'ltr:origin-top-left rtl:origin-top-right start-0';
+        break;
+    case 'top':
+        $alignmentClasses = 'origin-top';
+        break;
+    case 'right':
+    default:
+        $alignmentClasses = 'ltr:origin-top-right rtl:origin-top-left end-0';
+        break;
+}
+
+switch ($width) {
+    case '48':
+        $width = 'w-48';
+        break;
+}
+>>>>>>> 65b90b2f919fd62cef96302c70bf2e394d257722
 @endphp
 
 <div class="relative" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
