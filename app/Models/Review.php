@@ -5,13 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserAddress extends Model
+class Review extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'label', 'address', 'latitude', 'longitude', 'is_default'];
+    protected $fillable = ['order_id', 'user_id', 'rating', 'comments', 'courier_rating'];
 
-    protected $casts = ['is_default' => 'boolean'];
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
 
     public function user()
     {
