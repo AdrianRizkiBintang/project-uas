@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -6,15 +5,15 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('home') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                        {{ __('Home') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -68,8 +67,8 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                {{ __('Home') }}
             </x-responsive-nav-link>
         </div>
 
@@ -97,52 +96,5 @@
                 </form>
             </div>
         </div>
-=======
-﻿<input type="checkbox" id="nav-check" class="nav-check">
-<nav class="navbar">
-    <div class="navbar-inner">
-        <a href="{{ route('home') }}" class="navbar-brand">
-            Food<span>Order</span>
-        </a>
-
-        <div class="navbar-links">
-            <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
-                Beranda
-            </a>
-            <a href="{{ route('profile.history') }}" class="nav-link {{ request()->routeIs('profile.history') ? 'active' : '' }}">
-                Riwayat
-            </a>
-            <a href="{{ route('addresses.index') }}" class="nav-link {{ request()->routeIs('addresses.*') ? 'active' : '' }}">
-                Alamat
-            </a>
-
-            <details class="nav-dropdown">
-                <summary>{{ Auth::user()->name }} &#9660;</summary>
-                <div class="nav-dropdown-menu">
-                    <a href="{{ route('profile.edit') }}" class="nav-dropdown-item">Profil Saya</a>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="nav-dropdown-item">Keluar</button>
-                    </form>
-                </div>
-            </details>
-        </div>
-
-        <label for="nav-check" class="hamburger">&#9776;</label>
-    </div>
-
-    <div class="navbar-mobile">
-        <div class="mob-user">
-            {{ Auth::user()->name }} &mdash; {{ Auth::user()->email }}
-        </div>
-        <a href="{{ route('home') }}" class="mob-link">Beranda</a>
-        <a href="{{ route('profile.history') }}" class="mob-link">Riwayat Pesanan</a>
-        <a href="{{ route('addresses.index') }}" class="mob-link">Alamat Saya</a>
-        <a href="{{ route('profile.edit') }}" class="mob-link">Profil Saya</a>
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="mob-btn">Keluar</button>
-        </form>
->>>>>>> 65b90b2f919fd62cef96302c70bf2e394d257722
     </div>
 </nav>

@@ -14,24 +14,12 @@ return [
     |
     */
 
-<<<<<<< HEAD
     'postmark' => [
         'key' => env('POSTMARK_API_KEY'),
     ],
 
     'resend' => [
         'key' => env('RESEND_API_KEY'),
-=======
-    'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
-        'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
-        'scheme' => 'https',
-    ],
-
-    'postmark' => [
-        'token' => env('POSTMARK_TOKEN'),
->>>>>>> 65b90b2f919fd62cef96302c70bf2e394d257722
     ],
 
     'ses' => [
@@ -40,7 +28,6 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
-<<<<<<< HEAD
     'slack' => [
         'notifications' => [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),
@@ -48,6 +35,4 @@ return [
         ],
     ],
 
-=======
->>>>>>> 65b90b2f919fd62cef96302c70bf2e394d257722
 ];
