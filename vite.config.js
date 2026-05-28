@@ -4,7 +4,12 @@ import laravel from 'laravel-vite-plugin';
 import { bunny } from 'laravel-vite-plugin/fonts';
 import tailwindcss from '@tailwindcss/vite';
 =======
->>>>>>> e84b764 (Menambahkan rute otentikasi, perintah konsol, dan kasus uji awal)
+<<<<<<< HEAD
+import { bunny } from 'laravel-vite-plugin/fonts';
+import tailwindcss from '@tailwindcss/vite';
+=======
+>>>>>>> cd1aac3ff3eb328e01c7ec3a7a1c81eba9d6d37f
+>>>>>>> 43b70fe15192ffe77de4cb776a49bd82a85fc629
 
 export default defineConfig({
     plugins: [
@@ -12,6 +17,9 @@ export default defineConfig({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             refresh: true,
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 43b70fe15192ffe77de4cb776a49bd82a85fc629
             fonts: [
                 bunny('Instrument Sans', {
                     weights: [400, 500, 600],
@@ -25,8 +33,11 @@ export default defineConfig({
             ignored: ['**/storage/framework/views/**'],
         },
     },
+<<<<<<< HEAD
+=======
 =======
         }),
     ],
->>>>>>> e84b764 (Menambahkan rute otentikasi, perintah konsol, dan kasus uji awal)
+>>>>>>> cd1aac3ff3eb328e01c7ec3a7a1c81eba9d6d37f
+>>>>>>> 43b70fe15192ffe77de4cb776a49bd82a85fc629
 });

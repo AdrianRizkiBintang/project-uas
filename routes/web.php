@@ -2,13 +2,18 @@
 
 <<<<<<< HEAD
 =======
+<<<<<<< HEAD
+=======
 use App\Http\Controllers\ProfileController;
->>>>>>> e84b764 (Menambahkan rute otentikasi, perintah konsol, dan kasus uji awal)
+>>>>>>> cd1aac3ff3eb328e01c7ec3a7a1c81eba9d6d37f
+>>>>>>> 43b70fe15192ffe77de4cb776a49bd82a85fc629
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
+<<<<<<< HEAD
+=======
 <<<<<<< HEAD
 =======
 
@@ -23,4 +28,5 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
->>>>>>> e84b764 (Menambahkan rute otentikasi, perintah konsol, dan kasus uji awal)
+>>>>>>> cd1aac3ff3eb328e01c7ec3a7a1c81eba9d6d37f
+>>>>>>> 43b70fe15192ffe77de4cb776a49bd82a85fc629

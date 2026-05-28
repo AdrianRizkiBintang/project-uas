@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 43b70fe15192ffe77de4cb776a49bd82a85fc629
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -10,8 +13,11 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+<<<<<<< HEAD
+=======
 =======
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
->>>>>>> e84b764 (Menambahkan rute otentikasi, perintah konsol, dan kasus uji awal)
+>>>>>>> cd1aac3ff3eb328e01c7ec3a7a1c81eba9d6d37f
+>>>>>>> 43b70fe15192ffe77de4cb776a49bd82a85fc629
