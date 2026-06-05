@@ -18,4 +18,8 @@ class Menu extends Model
         return $this->belongsTo(Outlet::class);
     }
 
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
 }
