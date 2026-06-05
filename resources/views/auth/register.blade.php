@@ -1,40 +1,49 @@
 <x-guest-layout>
-    <h2>Masuk</h2>
+    <h2>Daftar Akun</h2>
 
-    <x-auth-session-status :status="session('status')" />
-
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="{{ route('register') }}">
         @csrf
+
+        <div class="form-group">
+            <label class="form-label" for="name">Nama Lengkap</label>
+            <input id="name" class="form-input" type="text" name="name"
+                   value="{{ old('name') }}" required autofocus autocomplete="name">
+            <x-input-error :messages="$errors->get('name')" />
+        </div>
 
         <div class="form-group">
             <label class="form-label" for="email">Email</label>
             <input id="email" class="form-input" type="email" name="email"
-                   value="{{ old('email') }}" required autofocus autocomplete="username">
+                   value="{{ old('email') }}" required autocomplete="username">
             <x-input-error :messages="$errors->get('email')" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="phone_number">Nomor Telepon</label>
+            <input id="phone_number" class="form-input" type="text" name="phone_number"
+                   value="{{ old('phone_number') }}" autocomplete="tel">
+            <x-input-error :messages="$errors->get('phone_number')" />
         </div>
 
         <div class="form-group">
             <label class="form-label" for="password">Password</label>
             <input id="password" class="form-input" type="password" name="password"
-                   required autocomplete="current-password">
+                   required autocomplete="new-password">
             <x-input-error :messages="$errors->get('password')" />
         </div>
 
-        <div class="form-check mb-16">
-            <input id="remember_me" type="checkbox" name="remember">
-            <label for="remember_me">Ingat saya</label>
+        <div class="form-group">
+            <label class="form-label" for="password_confirmation">Konfirmasi Password</label>
+            <input id="password_confirmation" class="form-input" type="password"
+                   name="password_confirmation" required autocomplete="new-password">
+            <x-input-error :messages="$errors->get('password_confirmation')" />
         </div>
 
-        <div class="d-flex justify-between align-center">
-            @if (Route::has('password.request'))
-                <a href="{{ route('password.request') }}" class="text-sm text-muted">Lupa password?</a>
-            @endif
-            <button type="submit" class="btn btn-primary">Masuk</button>
-        </div>
+        <button type="submit" class="btn btn-primary btn-full">Daftar</button>
 
         <div class="text-center mt-16">
-            <span class="text-sm text-muted">Belum punya akun?</span>
-            <a href="{{ route('register') }}" class="text-sm">Daftar</a>
+            <span class="text-sm text-muted">Sudah punya akun?</span>
+            <a href="{{ route('login') }}" class="text-sm">Masuk</a>
         </div>
     </form>
 </x-guest-layout>
