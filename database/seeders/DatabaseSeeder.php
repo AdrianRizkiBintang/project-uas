@@ -23,21 +23,23 @@ class DatabaseSeeder extends Seeder
 
         // Outlets
         $outlets = [
-            ['name' => 'Warung Nusantara', 'location' => 'Jl. Sudirman No. 1', 'status' => 'open'],
-            ['name' => 'Resto Bahari',     'location' => 'Jl. Gatot Subroto No. 5', 'status' => 'open'],
-            ['name' => 'Kedai Kopi Senja', 'location' => 'Jl. Pahlawan No. 12', 'status' => 'closed'],
+            ['name' => 'Burger Bliss Sudirman',  'location' => 'Jl. Sudirman No. 1',      'status' => 'open'],
+            ['name' => 'Burger Bliss Gatsu',     'location' => 'Jl. Gatot Subroto No. 5', 'status' => 'open'],
+            ['name' => 'Burger Bliss Pahlawan',  'location' => 'Jl. Pahlawan No. 12',     'status' => 'closed'],
         ];
 
         foreach ($outlets as $outletData) {
             $outlet = Outlet::create($outletData);
 
-            // Menus per outlet
             $menus = [
-                ['name' => 'Nasi Goreng Spesial',  'description' => 'Nasi goreng dengan telur dan ayam.', 'price' => 25000, 'category' => 'Main Course', 'is_available' => true],
-                ['name' => 'Mie Ayam Bakso',        'description' => 'Mie ayam dengan bakso sapi.', 'price' => 20000, 'category' => 'Main Course', 'is_available' => true],
-                ['name' => 'Es Teh Manis',          'description' => 'Teh manis dingin segar.', 'price' => 5000,  'category' => 'Beverage',    'is_available' => true],
-                ['name' => 'Jus Alpukat',           'description' => 'Jus alpukat kental susu.', 'price' => 15000, 'category' => 'Beverage',    'is_available' => true],
-                ['name' => 'Pisang Goreng Keju',    'description' => 'Pisang goreng tabur keju parut.', 'price' => 12000, 'category' => 'Snack',       'is_available' => true],
+                ['name' => 'Classic Burger',        'description' => 'Beef patty, selada, tomat, keju cheddar.',        'price' => 35000, 'category' => 'Burger',   'is_available' => true],
+                ['name' => 'Double Smash Burger',   'description' => 'Dua beef patty smash, saus spesial, pickles.',    'price' => 55000, 'category' => 'Burger',   'is_available' => true],
+                ['name' => 'Crispy Chicken Burger', 'description' => 'Ayam crispy juicy, mayo, selada renyah.',         'price' => 40000, 'category' => 'Burger',   'is_available' => true],
+                ['name' => 'BBQ Bacon Burger',      'description' => 'Beef patty, bacon crispy, saus BBQ smoky.',       'price' => 60000, 'category' => 'Burger',   'is_available' => true],
+                ['name' => 'French Fries Regular',  'description' => 'Kentang goreng renyah, tabur bumbu spesial.',     'price' => 18000, 'category' => 'Snack',    'is_available' => true],
+                ['name' => 'Onion Rings',           'description' => 'Bawang bombay goreng tepung crispy.',             'price' => 22000, 'category' => 'Snack',    'is_available' => true],
+                ['name' => 'Vanilla Milkshake',     'description' => 'Milkshake vanilla creamy, dingin menyegarkan.',  'price' => 28000, 'category' => 'Beverage', 'is_available' => true],
+                ['name' => 'Cola Float',            'description' => 'Soda cola dengan es krim vanilla mengambang.',   'price' => 20000, 'category' => 'Beverage', 'is_available' => true],
             ];
 
             foreach ($menus as $menuData) {
@@ -47,25 +49,25 @@ class DatabaseSeeder extends Seeder
 
         // Promos
         Promo::create([
-            'code'           => 'HEMAT10',
-            'discount_type'  => 'percentage',
-            'discount_value' => 10,
-            'min_order'      => 30000,
-            'max_uses'       => 100,
-            'used_count'     => 0,
+            'code'            => 'BURGER10',
+            'discount_type'   => 'percentage',
+            'discount_value'  => 10,
+            'min_order'       => 50000,
+            'max_uses'        => 100,
+            'used_count'      => 0,
             'expiration_date' => now()->addMonths(3),
-            'is_active'      => true,
+            'is_active'       => true,
         ]);
 
         Promo::create([
-            'code'           => 'DISKON5K',
-            'discount_type'  => 'fixed',
-            'discount_value' => 5000,
-            'min_order'      => 20000,
-            'max_uses'       => 50,
-            'used_count'     => 0,
+            'code'            => 'FREEFRIES',
+            'discount_type'   => 'fixed',
+            'discount_value'  => 18000,
+            'min_order'       => 60000,
+            'max_uses'        => 50,
+            'used_count'      => 0,
             'expiration_date' => now()->addMonths(2),
-            'is_active'      => true,
+            'is_active'       => true,
         ]);
     }
 }
