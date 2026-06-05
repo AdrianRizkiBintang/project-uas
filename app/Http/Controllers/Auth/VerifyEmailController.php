@@ -1,20 +1,27 @@
 <?php
 
-namespace App\Models;
+namespace App\Http\Controllers\Auth;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\Verified;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\RedirectResponse;
 
-class UserAddress extends Model
+class VerifyEmailController extends Controller
 {
-    use HasFactory;
-
-    protected $fillable = ['user_id', 'label', 'address', 'latitude', 'longitude', 'is_default'];
-
-    protected $casts = ['is_default' => 'boolean'];
-
-    public function user()
+    /**
+     * Mark the authenticated user's email address as verified.
+     */
+    public function __invoke(EmailVerificationRequest $request): RedirectResponse
     {
-        return $this->belongsTo(User::class);
+        if ($request->user()->hasVerifiedEmail()) {
+            return redirect()->intended(route('dashboard', absolute: false).'?verified=1');
+        }
+
+        if ($request->user()->markEmailAsVerified()) {
+            event(new Verified($request->user()));
+        }
+
+        return redirect()->intended(route('dashboard', absolute: false).'?verified=1');
     }
 }
