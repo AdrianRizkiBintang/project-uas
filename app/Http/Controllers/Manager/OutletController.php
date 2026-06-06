@@ -22,12 +22,12 @@ class OutletController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'    => 'required|string|max:255',
-            'address' => 'required|string',
-            'phone'   => 'nullable|string|max:20',
+            'name'     => 'required|string|max:255',
+            'location' => 'required|string',
+            'status' => 'required|in:open,closed',
         ]);
 
-        Outlet::create($request->only('name', 'address', 'phone'));
+        Outlet::create($request->only('name', 'location', 'status'));
 
         return redirect()->route('manager.outlet.index')->with('success', 'Outlet berhasil ditambahkan!');
     }
@@ -40,12 +40,12 @@ class OutletController extends Controller
     public function update(Request $request, Outlet $outlet)
     {
         $request->validate([
-            'name'    => 'required|string|max:255',
-            'address' => 'required|string',
-            'phone'   => 'nullable|string|max:20',
+            'name'     => 'required|string|max:255',
+            'location' => 'required|string',
+            'status'   => 'required|in:active,inactive',
         ]);
 
-        $outlet->update($request->only('name', 'address', 'phone'));
+        $outlet->update($request->only('name', 'location', 'status'));
 
         return redirect()->route('manager.outlet.index')->with('success', 'Outlet berhasil diupdate!');
     }

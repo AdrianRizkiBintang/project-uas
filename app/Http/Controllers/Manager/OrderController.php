@@ -21,6 +21,12 @@ class OrderController extends Controller
 
     public function updateStatus(Order $order, string $status)
     {
+        $allowed = ['pending', 'confirmed', 'processing', 'out_for_delivery', 'completed', 'cancelled'];
+
+        if (!in_array($status, $allowed)) {
+            return back()->with('error', 'Status tidak valid!');
+        }
+
         $order->update(['status' => $status]);
         return back()->with('success', 'Status pesanan diupdate!');
     }
