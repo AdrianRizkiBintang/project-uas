@@ -23,6 +23,7 @@ class User extends Authenticatable
         'password',
         'phone_number',
         'avatar',
+        'role',
     ];
 
     protected $hidden = [
@@ -34,6 +35,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function isManager(): bool
+    {
+        return $this->role === 'manager';
+    }
+
+    public function isKaryawan(): bool
+    {
+        return $this->role === 'karyawan';
+    }
+
+    public function isStaff(): bool
+    {
+        return in_array($this->role, ['manager', 'karyawan']);
+    }
 
     public function addresses()
     {
