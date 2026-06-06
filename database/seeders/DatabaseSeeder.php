@@ -3,69 +3,234 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
-use App\Models\Outlet;
-use App\Models\Menu;
-use App\Models\Promo;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // Demo user
-        User::create([
-            'name'         => 'Demo User',
-            'email'        => 'demo@example.com',
-            'password'     => Hash::make('password'),
-            'phone_number' => '08123456789',
+        // USERS
+        DB::table('users')->insert([
+            [
+                'name'         => 'Khresnanda Putra Wirawan',
+                'email'        => 'khresnanda12@gmail.com',
+                'password'     => Hash::make('password'),
+                'role'         => 'manager',
+                'phone_number' => '081234567890',
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ],
+            [
+                'name'         => 'Budi Karyawan',
+                'email'        => 'budi@burgerjo.com',
+                'password'     => Hash::make('password'),
+                'role'         => 'karyawan',
+                'phone_number' => '081111111111',
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ],
+            [
+                'name'         => 'Ani Customer',
+                'email'        => 'ani@gmail.com',
+                'password'     => Hash::make('password'),
+                'role'         => 'customer',
+                'phone_number' => '082222222222',
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ],
         ]);
 
-        // Outlets
-        $outlets = [
-            ['name' => 'Warung Nusantara', 'location' => 'Jl. Sudirman No. 1', 'status' => 'open'],
-            ['name' => 'Resto Bahari',     'location' => 'Jl. Gatot Subroto No. 5', 'status' => 'open'],
-            ['name' => 'Kedai Kopi Senja', 'location' => 'Jl. Pahlawan No. 12', 'status' => 'closed'],
-        ];
-
-        foreach ($outlets as $outletData) {
-            $outlet = Outlet::create($outletData);
-
-            // Menus per outlet
-            $menus = [
-                ['name' => 'Nasi Goreng Spesial',  'description' => 'Nasi goreng dengan telur dan ayam.', 'price' => 25000, 'category' => 'Main Course', 'is_available' => true],
-                ['name' => 'Mie Ayam Bakso',        'description' => 'Mie ayam dengan bakso sapi.', 'price' => 20000, 'category' => 'Main Course', 'is_available' => true],
-                ['name' => 'Es Teh Manis',          'description' => 'Teh manis dingin segar.', 'price' => 5000,  'category' => 'Beverage',    'is_available' => true],
-                ['name' => 'Jus Alpukat',           'description' => 'Jus alpukat kental susu.', 'price' => 15000, 'category' => 'Beverage',    'is_available' => true],
-                ['name' => 'Pisang Goreng Keju',    'description' => 'Pisang goreng tabur keju parut.', 'price' => 12000, 'category' => 'Snack',       'is_available' => true],
-            ];
-
-            foreach ($menus as $menuData) {
-                Menu::create(array_merge($menuData, ['outlet_id' => $outlet->id]));
-            }
-        }
-
-        // Promos
-        Promo::create([
-            'code'           => 'HEMAT10',
-            'discount_type'  => 'percentage',
-            'discount_value' => 10,
-            'min_order'      => 30000,
-            'max_uses'       => 100,
-            'used_count'     => 0,
-            'expiration_date' => now()->addMonths(3),
-            'is_active'      => true,
+        // OUTLETS
+        DB::table('outlets')->insert([
+            [
+                'name'       => 'Burger Jo - Sudirman',
+                'location'   => 'Jl. Jend. Sudirman No. 1, Jakarta Pusat',
+                'status'     => 'open',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name'       => 'Burger Jo - Kemang',
+                'location'   => 'Jl. Kemang Raya No. 45, Jakarta Selatan',
+                'status'     => 'open',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name'       => 'Burger Jo - BSD',
+                'location'   => 'BSD City, Jl. Pahlawan Seribu, Tangerang Selatan',
+                'status'     => 'open',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
 
-        Promo::create([
-            'code'           => 'DISKON5K',
-            'discount_type'  => 'fixed',
-            'discount_value' => 5000,
-            'min_order'      => 20000,
-            'max_uses'       => 50,
-            'used_count'     => 0,
-            'expiration_date' => now()->addMonths(2),
-            'is_active'      => true,
+        // MENUS
+        DB::table('menus')->insert([
+            // Burger
+            [
+                'name'         => 'Classic Beef Burger',
+                'description'  => 'Beef patty juicy 150gr, selada, tomat, bawang, saus spesial, roti brioche.',
+                'price'        => 45000,
+                'category'     => 'makanan',
+                'is_available' => true,
+                'outlet_id'    => 1,
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ],
+            [
+                'name'         => 'Double Smash Burger',
+                'description'  => 'Dua beef patty smashed tipis, double keju cheddar, pickles, saus mustard.',
+                'price'        => 65000,
+                'category'     => 'makanan',
+                'is_available' => true,
+                'outlet_id'    => 1,
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ],
+            [
+                'name'         => 'BBQ Bacon Burger',
+                'description'  => 'Beef patty, bacon crispy, saus BBQ smoky, bawang bombay karamel, keju.',
+                'price'        => 72000,
+                'category'     => 'makanan',
+                'is_available' => true,
+                'outlet_id'    => 1,
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ],
+            [
+                'name'         => 'Spicy Volcano Burger',
+                'description'  => 'Beef patty pedas, jalapeño, saus volcano extra hot, keju pepper jack.',
+                'price'        => 60000,
+                'category'     => 'makanan',
+                'is_available' => true,
+                'outlet_id'    => 1,
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ],
+            [
+                'name'         => 'Crispy Chicken Burger',
+                'description'  => 'Ayam crispy goreng tepung, slaw coleslaw, saus honey mustard.',
+                'price'        => 50000,
+                'category'     => 'makanan',
+                'is_available' => true,
+                'outlet_id'    => 1,
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ],
+            [
+                'name'         => 'Mushroom Swiss Burger',
+                'description'  => 'Beef patty, tumis jamur, keju swiss, saus garlic aioli.',
+                'price'        => 68000,
+                'category'     => 'makanan',
+                'is_available' => true,
+                'outlet_id'    => 1,
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ],
+            [
+                'name'         => 'Veggie Burger',
+                'description'  => 'Patty dari black bean, alpukat, tomat, selada, saus yogurt.',
+                'price'        => 48000,
+                'category'     => 'makanan',
+                'is_available' => true,
+                'outlet_id'    => 1,
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ],
+            // Snack
+            [
+                'name'         => 'Kentang Goreng Reguler',
+                'description'  => 'Kentang goreng crispy dengan garam, disajikan dengan saus tomat & mayo.',
+                'price'        => 22000,
+                'category'     => 'snack',
+                'is_available' => true,
+                'outlet_id'    => 1,
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ],
+            [
+                'name'         => 'Loaded Cheese Fries',
+                'description'  => 'Kentang goreng dengan saus keju cheddar leleh dan bacon bits.',
+                'price'        => 35000,
+                'category'     => 'snack',
+                'is_available' => true,
+                'outlet_id'    => 1,
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ],
+            [
+                'name'         => 'Onion Rings',
+                'description'  => 'Bawang bombay goreng tepung crispy, saus ranch.',
+                'price'        => 28000,
+                'category'     => 'snack',
+                'is_available' => true,
+                'outlet_id'    => 1,
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ],
+            [
+                'name'         => 'Chicken Nuggets 6pcs',
+                'description'  => 'Nugget ayam crispy 6 potong, saus BBQ atau saus tomat.',
+                'price'        => 30000,
+                'category'     => 'snack',
+                'is_available' => true,
+                'outlet_id'    => 1,
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ],
+            // Minuman
+            [
+                'name'         => 'Cola Float',
+                'description'  => 'Minuman cola dingin dengan es krim vanilla di atasnya.',
+                'price'        => 22000,
+                'category'     => 'minuman',
+                'is_available' => true,
+                'outlet_id'    => 1,
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ],
+            [
+                'name'         => 'Milkshake Coklat',
+                'description'  => 'Milkshake creamy rasa coklat dengan whipped cream.',
+                'price'        => 35000,
+                'category'     => 'minuman',
+                'is_available' => true,
+                'outlet_id'    => 1,
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ],
+            [
+                'name'         => 'Milkshake Vanilla',
+                'description'  => 'Milkshake creamy rasa vanilla klasik dengan whipped cream.',
+                'price'        => 35000,
+                'category'     => 'minuman',
+                'is_available' => true,
+                'outlet_id'    => 1,
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ],
+            [
+                'name'         => 'Lemon Squash',
+                'description'  => 'Air soda dengan perasan lemon segar dan mint.',
+                'price'        => 18000,
+                'category'     => 'minuman',
+                'is_available' => true,
+                'outlet_id'    => 1,
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ],
+            [
+                'name'         => 'Es Teh Manis',
+                'description'  => 'Teh manis dingin yang menyegarkan.',
+                'price'        => 8000,
+                'category'     => 'minuman',
+                'is_available' => true,
+                'outlet_id'    => 1,
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ],
         ]);
     }
 }

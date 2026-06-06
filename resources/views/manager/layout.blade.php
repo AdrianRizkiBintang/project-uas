@@ -15,6 +15,7 @@
         @if(auth()->user()->isManager())
             <a href="{{ route('manager.menu.index') }}" class="hover:text-orange-400">Menu</a>
             <a href="{{ route('manager.outlet.index') }}" class="hover:text-orange-400">Outlet</a>
+            <a href="{{ route('manager.user.index') }}" class="hover:text-orange-400">Users</a>
         @endif
         <a href="{{ route('manager.order.index') }}" class="hover:text-orange-400">Pesanan</a>
         <a href="{{ route('home') }}" class="hover:text-orange-400">← Ke Web</a>
@@ -29,6 +30,11 @@
     @if(session('success'))
         <div class="bg-green-100 border border-green-400 text-green-800 px-4 py-3 rounded mb-4">
             {{ session('success') }}
+        </div>
+    @endif
+    @if(session('error'))
+        <div class="bg-red-100 border border-red-400 text-red-800 px-4 py-3 rounded mb-4">
+            {{ session('error') }}
         </div>
     @endif
     @yield('content')
