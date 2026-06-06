@@ -8,6 +8,11 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Manager\DashboardController as ManagerDashboard;
+use App\Http\Controllers\Manager\MenuController as ManagerMenu;
+use App\Http\Controllers\Manager\OutletController as ManagerOutlet;
+use App\Http\Controllers\Manager\OrderController as ManagerOrder;
+
 
 Route::get('/', function () {
     return redirect()->route('home');
@@ -58,4 +63,26 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/orders/{order}/review', [ReviewController::class, 'store'])->name('reviews.store');
 });
 
+// Manager Routes
+Route::middleware(['auth', 'role:manager,karyawan'])
+    ->prefix('panel')
+    ->name('manager.')
+    ->group(function () {
+
+        Route::get('/dashboard', [ManagerDashboard::class, 'index'])->name('dashboard');
+
+        // Menu — hanya manager
+        Route::middleware('role:manager')->group(function () {
+            Route::resource('menu', ManagerMenu::class);
+            Route::resource('outlet', ManagerOutlet::class);
+        });
+
+        // Orders — manager & karyawan
+        Route::get('/orders', [ManagerOrder::class, 'index'])->name('order.index');
+        Route::get('/orders/{order}', [ManagerOrder::class, 'show'])->name('order.show');
+        Route::patch('/orders/{order}/status/{status}', [ManagerOrder::class, 'updateStatus'])->name('order.status');
+    });
+    
 require __DIR__ . '/auth.php';
+
+

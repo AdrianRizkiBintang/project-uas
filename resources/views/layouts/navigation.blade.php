@@ -19,6 +19,9 @@
             <details class="nav-dropdown">
                 <summary>{{ Auth::user()->name }} &#9660;</summary>
                 <div class="nav-dropdown-menu">
+                    @if(auth()->user()->isStaff())
+                    <a href="{{ route('manager.dashboard') }}" class="nav-dropdown-item">Panel Manager</a>
+                    @endif
                     <a href="{{ route('profile.edit') }}" class="nav-dropdown-item">Profil Saya</a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
@@ -38,6 +41,9 @@
         <a href="{{ route('home') }}" class="mob-link">Beranda</a>
         <a href="{{ route('profile.history') }}" class="mob-link">Riwayat Pesanan</a>
         <a href="{{ route('addresses.index') }}" class="mob-link">Alamat Saya</a>
+        @if(auth()->user()->isStaff())
+        <a href="{{ route('manager.dashboard') }}" class="mob-link">Panel Manager</a>
+        @endif
         <a href="{{ route('profile.edit') }}" class="mob-link">Profil Saya</a>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
