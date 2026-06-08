@@ -13,7 +13,6 @@ use App\Http\Controllers\Manager\MenuController as ManagerMenu;
 use App\Http\Controllers\Manager\OutletController as ManagerOutlet;
 use App\Http\Controllers\Manager\OrderController as ManagerOrder;
 
-
 Route::get('/', function () {
     return redirect()->route('home');
 });
@@ -63,7 +62,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/orders/{order}/review', [ReviewController::class, 'store'])->name('reviews.store');
 });
 
-// Manager Routes
+// Manager & Karyawan Panel
 Route::middleware(['auth', 'role:manager,karyawan'])
     ->prefix('panel')
     ->name('manager.')
@@ -71,10 +70,12 @@ Route::middleware(['auth', 'role:manager,karyawan'])
 
         Route::get('/dashboard', [ManagerDashboard::class, 'index'])->name('dashboard');
 
-        // Menu — hanya manager
+        // Menu, Outlet, Users — hanya manager
         Route::middleware('role:manager')->group(function () {
             Route::resource('menu', ManagerMenu::class);
             Route::resource('outlet', ManagerOutlet::class);
+            Route::get('/users', [\App\Http\Controllers\Manager\UserController::class, 'index'])->name('user.index');
+            Route::patch('/users/{user}/role', [\App\Http\Controllers\Manager\UserController::class, 'updateRole'])->name('user.role');
         });
 
         // Orders — manager & karyawan
@@ -82,7 +83,5 @@ Route::middleware(['auth', 'role:manager,karyawan'])
         Route::get('/orders/{order}', [ManagerOrder::class, 'show'])->name('order.show');
         Route::patch('/orders/{order}/status/{status}', [ManagerOrder::class, 'updateStatus'])->name('order.status');
     });
-    
+
 require __DIR__ . '/auth.php';
-
-
