@@ -52,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
     // Delivery Flow
     Route::prefix('delivery')->name('delivery.')->group(function () {
         Route::get('/address', [DeliveryController::class, 'address'])->name('address');
+        Route::get('/outlet', [DeliveryController::class, 'outlet'])->name('outlet');
         Route::get('/menu', [DeliveryController::class, 'menu'])->name('menu');
         Route::get('/cart', [DeliveryController::class, 'cart'])->name('cart');
         Route::post('/checkout', [DeliveryController::class, 'checkout'])->name('checkout');
