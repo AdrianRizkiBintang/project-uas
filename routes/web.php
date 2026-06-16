@@ -59,8 +59,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/track/{order}', [DeliveryController::class, 'track'])->name('track');
     });
 
+    // Reorder Order
+    Route::post('/orders/{order}/reorder', [ProfileController::class, 'reorder'])
+        ->name('orders.reorder');
+
     // Reviews
-    Route::post('/orders/{order}/review', [ReviewController::class, 'store'])->name('reviews.store');
+    Route::post('/orders/{order}/review', [ReviewController::class, 'store'])
+        ->name('reviews.store');
 });
 
 // Owner, Manager & Karyawan Panel
@@ -79,8 +84,11 @@ Route::middleware(['auth', 'role:owner,manager,karyawan'])
 
         // Users — owner & manager, dengan batasan role di controller
         Route::middleware('owner_or_manager')->group(function () {
-            Route::get('/users', [\App\Http\Controllers\Manager\UserController::class, 'index'])->name('user.index');
-            Route::patch('/users/{user}/role', [\App\Http\Controllers\Manager\UserController::class, 'updateRole'])->name('user.role');
+            Route::get('/users', [\App\Http\Controllers\Manager\UserController::class, 'index'])
+                ->name('user.index');
+
+            Route::patch('/users/{user}/role', [\App\Http\Controllers\Manager\UserController::class, 'updateRole'])
+                ->name('user.role');
         });
 
         // Orders — owner, manager & karyawan
