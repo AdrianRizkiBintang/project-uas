@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Order;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,12 +33,14 @@ class ProfileController extends Controller
             if ($user->avatar) {
                 Storage::disk('public')->delete($user->avatar);
             }
+
             $user->avatar = $request->file('avatar')->store('avatars', 'public');
         }
 
         $user->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.edit')
+            ->with('status', 'profile-updated');
     }
 
     public function destroy(Request $request): RedirectResponse
@@ -66,5 +69,51 @@ class ProfileController extends Controller
             ->paginate(10);
 
         return view('profile.history', compact('orders'));
+    }
+
+    public function reorder(Order $order)
+    {
+        abort_unless($order->user_id === auth()->id(), 403);
+
+        $order->load('items.menu');
+
+        $cartKey = $order->type === 'delivery'
+            ? 'delivery_cart'
+            : 'cart';
+
+        $outletKey = $order->type === 'delivery'
+            ? 'delivery_cart_outlet_id'
+            : 'cart_outlet_id';
+
+        $cart = [];
+
+        foreach ($order->items as $item) {
+
+            if (!$item->menu) {
+                continue;
+            }
+
+            $cart[$item->menu_id] = [
+                'name'     => $item->menu->name,
+                'price'    => (float) $item->price_at_time,
+                'quantity' => $item->quantity,
+                'notes'    => $item->notes,
+                'image'    => $item->menu->image,
+            ];
+        }
+
+        session([
+            $cartKey   => $cart,
+            $outletKey => $order->outlet_id,
+        ]);
+
+        return redirect()->route(
+            $order->type === 'delivery'
+                ? 'delivery.cart'
+                : 'dine-in.cart'
+        )->with(
+            'success',
+            'Pesanan berhasil dimasukkan kembali ke keranjang.'
+        );
     }
 }
