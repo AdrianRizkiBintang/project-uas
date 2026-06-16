@@ -15,6 +15,9 @@
             <a href="{{ route('addresses.index') }}" class="nav-link {{ request()->routeIs('addresses.*') ? 'active' : '' }}">
                 Alamat
             </a>
+            <a href="{{ route('wishlist.index') }}" class="nav-link {{ request()->routeIs('wishlist.*') ? 'active' : '' }}">
+                Wishlist
+            </a>
 
             <details class="nav-dropdown">
                 <summary>{{ Auth::user()->name }} &#9660;</summary>
@@ -41,6 +44,7 @@
         <a href="{{ route('home') }}" class="mob-link">Beranda</a>
         <a href="{{ route('profile.history') }}" class="mob-link">Riwayat Pesanan</a>
         <a href="{{ route('addresses.index') }}" class="mob-link">Alamat Saya</a>
+        <a href="{{ route('wishlist.index') }}" class="mob-link">Wishlist Saya</a>
         @if(auth()->user()->isStaff())
         <a href="{{ route('manager.dashboard') }}" class="mob-link">Panel Manager</a>
         @endif

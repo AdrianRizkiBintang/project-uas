@@ -7,6 +7,7 @@ use App\Http\Controllers\DineInController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Manager\DashboardController as ManagerDashboard;
 use App\Http\Controllers\Manager\MenuController as ManagerMenu;
@@ -60,6 +61,10 @@ Route::middleware(['auth'])->group(function () {
 
     // Reviews
     Route::post('/orders/{order}/review', [ReviewController::class, 'store'])->name('reviews.store');
+
+    // Wishlist
+    Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+    Route::post('/wishlist/{menu}/toggle', [WishlistController::class, 'toggle'])->name('wishlist.toggle');
 });
 
 // Manager & Karyawan Panel
