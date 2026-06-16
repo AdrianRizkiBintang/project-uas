@@ -50,4 +50,9 @@ class Menu extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
+
+    public function wishlistedBy()
+    {
+        return $this->hasMany(Wishlist::class);
+    }
 }

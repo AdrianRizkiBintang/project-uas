@@ -63,6 +63,12 @@
                         <input type="number" name="quantity" value="1" min="1" class="qty-input">
                         <button type="submit" class="btn btn-primary btn-sm flex-1">+ Tambah</button>
                     </form>
+                    <form method="POST" action="{{ route('wishlist.toggle', $menu) }}" class="mt-8">
+                        @csrf
+                        <button type="submit" class="btn btn-secondary btn-sm flex-1">
+                            {{ $menu->wishlistedBy->where('user_id', auth()->id())->count() > 0 ? '★ Hapus dari Wishlist' : '☆ Tambah ke Wishlist' }}
+                        </button>
+                    </form>
                 </div>
             </div>
             @endforeach
