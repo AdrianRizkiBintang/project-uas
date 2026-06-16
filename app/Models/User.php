@@ -12,11 +12,6 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'email',
@@ -36,6 +31,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function isOwner(): bool
+    {
+        return $this->role === 'owner';
+    }
+
     public function isManager(): bool
     {
         return $this->role === 'manager';
@@ -48,7 +48,7 @@ class User extends Authenticatable
 
     public function isStaff(): bool
     {
-        return in_array($this->role, ['manager', 'karyawan']);
+        return in_array($this->role, ['owner', 'manager', 'karyawan']);
     }
 
     public function addresses()

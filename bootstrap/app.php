@@ -15,9 +15,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'auth' => Authenticate::class,
-            'guest' => RedirectIfAuthenticated::class,
-            'role' => \App\Http\Middleware\CheckRole::class,
+            'auth'             => Authenticate::class,
+            'guest'            => RedirectIfAuthenticated::class,
+            'role'             => \App\Http\Middleware\CheckRole::class,
+            'owner_or_manager' => \App\Http\Middleware\CheckOwnerOrManager::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

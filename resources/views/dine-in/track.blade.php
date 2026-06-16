@@ -73,6 +73,44 @@
             </div>
         </div>
 
+        {{-- QRIS Display --}}
+        @if($order->payment_method === 'qris' && $order->payment_status === 'unpaid')
+        <div class="card mb-20" style="text-align:center;">
+            <div class="card-header" style="background:#1976d2;color:#fff;font-weight:700;">
+                💳 Pembayaran QRIS
+            </div>
+            <div class="card-body">
+                <p style="margin-bottom:8px;font-weight:600;font-size:15px;">Scan QR Code berikut untuk membayar</p>
+                <p style="font-size:26px;font-weight:700;color:#1976d2;margin-bottom:12px;">
+                    Rp {{ number_format($order->total_amount, 0, ',', '.') }}
+                </p>
+
+                <div style="display:inline-block;padding:16px;border:2px solid #e0e0e0;border-radius:12px;background:#fff;margin:8px 0;">
+                    <img
+                        src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=QRIS-ORDER-{{ $order->id }}-TOTAL-{{ $order->total_amount }}"
+                        alt="QR Code Pembayaran"
+                        width="220"
+                        height="220"
+                        style="display:block;"
+                    >
+                </div>
+
+                <div style="background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:12px;margin-top:12px;font-size:14px;text-align:left;">
+                    <strong>Cara Bayar:</strong><br>
+                    1. Buka aplikasi e-wallet / mobile banking Anda<br>
+                    2. Pilih fitur <em>Scan QR</em><br>
+                    3. Arahkan kamera ke QR Code di atas<br>
+                    4. Konfirmasi jumlah pembayaran<br>
+                    5. Selesai — status akan diperbarui otomatis
+                </div>
+
+                <div style="margin-top:12px;color:#888;font-size:13px;">
+                    Order ID: <strong>#{{ $order->id }}</strong>
+                </div>
+            </div>
+        </div>
+        @endif
+
         {{-- Review --}}
         @if($order->status === 'completed' && !$order->review)
         <div class="card mb-20">
