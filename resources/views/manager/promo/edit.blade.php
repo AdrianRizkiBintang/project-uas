@@ -1,3 +1,13 @@
+@if ($errors->any())
+    <div style="background:red;color:white;padding:10px;">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 @extends('manager.layout')
 
 @section('content')

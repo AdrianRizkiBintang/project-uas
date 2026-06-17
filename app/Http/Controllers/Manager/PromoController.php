@@ -19,25 +19,26 @@ class PromoController extends Controller
         return view('manager.promo.create');
     }
 
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'code'            => 'required|string|max:50|unique:promos,code',
-            'discount_type'   => 'required|in:percentage,fixed',
-            'discount_value'  => 'required|numeric|min:0',
-            'min_order'       => 'nullable|numeric|min:0',
-            'max_uses'        => 'nullable|integer|min:1',
-            'expiration_date' => 'nullable|date',
-            'is_active'       => 'boolean',
-        ]);
+public function store(Request $request)
+{
+    $validated = $request->validate([
+        'code'            => 'required|string|max:50|unique:promos,code',
+        'discount_type'   => 'required|in:percentage,fixed',
+        'discount_value'  => 'required|numeric|min:0',
+        'min_order'       => 'nullable|numeric|min:0',
+        'max_uses'        => 'nullable|integer|min:1',
+        'expiration_date' => 'nullable|date',
+        'is_active'       => 'nullable',
+    ]);
 
-        $validated['is_active'] = $request->has('is_active');
-        $validated['used_count'] = 0;
+    $validated['is_active'] = $request->has('is_active');
+    $validated['used_count'] = 0;
 
-        Promo::create($validated);
+    Promo::create($validated);
 
-        return redirect()->route('manager.promo.index')->with('success', 'Promo berhasil ditambahkan.');
-    }
+    return redirect()->route('manager.promo.index')
+        ->with('success', 'Promo berhasil ditambahkan.');
+}
 
     public function edit(Promo $promo)
     {
@@ -45,27 +46,29 @@ class PromoController extends Controller
     }
 
     public function update(Request $request, Promo $promo)
-    {
-        $validated = $request->validate([
-            'code'            => 'required|string|max:50|unique:promos,code,' . $promo->id,
-            'discount_type'   => 'required|in:percentage,fixed',
-            'discount_value'  => 'required|numeric|min:0',
-            'min_order'       => 'nullable|numeric|min:0',
-            'max_uses'        => 'nullable|integer|min:1',
-            'expiration_date' => 'nullable|date',
-            'is_active'       => 'boolean',
-        ]);
+{
+    $validated = $request->validate([
+        'code'            => 'required|string|max:50|unique:promos,code,' . $promo->id,
+        'discount_type'   => 'required|in:percentage,fixed',
+        'discount_value'  => 'required|numeric|min:0',
+        'min_order'       => 'nullable|numeric|min:0',
+        'max_uses'        => 'nullable|integer|min:1',
+        'expiration_date' => 'nullable|date',
+        'is_active'       => 'nullable',
+    ]);
 
-        $validated['is_active'] = $request->has('is_active');
+    $validated['is_active'] = $request->has('is_active');
 
-        $promo->update($validated);
+    $promo->update($validated);
 
-        return redirect()->route('manager.promo.index')->with('success', 'Promo berhasil diperbarui.');
-    }
+    return redirect()->route('manager.promo.index')
+        ->with('success', 'Promo berhasil diperbarui.');
+}
 
     public function destroy(Promo $promo)
     {
         $promo->delete();
+
         return redirect()->route('manager.promo.index')->with('success', 'Promo berhasil dihapus.');
     }
 }

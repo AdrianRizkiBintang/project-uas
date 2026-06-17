@@ -15,6 +15,7 @@
             {{ ucfirst(auth()->user()->role) }}
         </span>
     </span>
+
     <div class="flex items-center gap-6 text-sm">
         <a href="{{ route('manager.dashboard') }}" class="hover:text-orange-400">Dashboard</a>
         @if(auth()->user()->isOwner() || auth()->user()->isManager())
