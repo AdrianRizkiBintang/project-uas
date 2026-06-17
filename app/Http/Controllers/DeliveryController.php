@@ -53,26 +53,40 @@ class DeliveryController extends Controller
      * @return \Illuminate\View\View
      */
     public function menu(Request $request)
-    {
-        $outletId = $request->query('outlet_id');
-        $outlet   = Outlet::findOrFail($outletId);
-        $search   = $request->query('search');
-        $category = $request->query('category');
+{
+    $outletId = $request->query('outlet_id');
+    $outlet   = Outlet::findOrFail($outletId);
 
-        // Ambil menu yang tersedia di outlet dengan filter opsional
-        $menus = Menu::where('outlet_id', $outletId)
-            ->where('is_available', true)
-            ->when($search, fn($q) => $q->where('name', 'like', "%{$search}%"))
-            ->when($category, fn($q) => $q->where('category', $category))
-            ->get();
+    $search   = $request->query('search');
+    $category = $request->query('category');
+    $sort     = $request->query('sort');
 
-        // Ambil semua kategori unik untuk keperluan filter dropdown
-        $categories = Menu::where('outlet_id', $outletId)
-            ->distinct()
-            ->pluck('category');
+    $menus = Menu::where('outlet_id', $outletId)
+        ->where('is_available', true)
+        ->when($search, fn($q) => $q->where('name', 'like', "%{$search}%"))
+        ->when($category, fn($q) => $q->where('category', $category))
+        ->when($sort === 'price_asc', fn($q) => $q->orderBy('price', 'asc'))
+        ->when($sort === 'price_desc', fn($q) => $q->orderBy('price', 'desc'))
+        ->when($sort === 'name_asc', fn($q) => $q->orderBy('name', 'asc'))
+        ->when($sort === 'name_desc', fn($q) => $q->orderBy('name', 'desc'))
+        ->get();
 
-        return view('delivery.menu', compact('outlet', 'menus', 'categories', 'search', 'category'));
-    }
+    $categories = Menu::where('outlet_id', $outletId)
+        ->distinct()
+        ->pluck('category');
+
+    return view(
+        'delivery.menu',
+        compact(
+            'outlet',
+            'menus',
+            'categories',
+            'search',
+            'category',
+            'sort'
+        )
+    );
+}
 
     /**
      * Menampilkan halaman keranjang belanja untuk alur delivery.
