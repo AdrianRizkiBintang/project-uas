@@ -13,6 +13,7 @@ use App\Http\Controllers\Manager\DashboardController as ManagerDashboard;
 use App\Http\Controllers\Manager\MenuController as ManagerMenu;
 use App\Http\Controllers\Manager\OutletController as ManagerOutlet;
 use App\Http\Controllers\Manager\OrderController as ManagerOrder;
+use App\Http\Controllers\Manager\PromoController as ManagerPromo;
 
 Route::get('/', function () {
     return redirect()->route('home');
@@ -84,6 +85,7 @@ Route::middleware(['auth', 'role:owner,manager,karyawan'])
         Route::middleware('owner_or_manager')->group(function () {
             Route::resource('menu', ManagerMenu::class);
             Route::resource('outlet', ManagerOutlet::class);
+            Route::resource('promo', ManagerPromo::class);
         });
 
         // Users — owner & manager, dengan batasan role di controller

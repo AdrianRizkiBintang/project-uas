@@ -20,6 +20,7 @@
         @if(auth()->user()->isOwner() || auth()->user()->isManager())
             <a href="{{ route('manager.menu.index') }}" class="hover:text-orange-400">Menu</a>
             <a href="{{ route('manager.outlet.index') }}" class="hover:text-orange-400">Outlet</a>
+            <a href="{{ route('manager.promo.index') }}" class="hover:text-orange-400">Promo</a>
             <a href="{{ route('manager.user.index') }}" class="hover:text-orange-400">Users</a>
         @endif
         <a href="{{ route('manager.order.index') }}" class="hover:text-orange-400">Pesanan</a>
