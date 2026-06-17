@@ -18,24 +18,41 @@ class DineInController extends Controller
      * @return \Illuminate\View\View
      */
     public function menu(Request $request)
-    {
-        $outletId = $request->query('outlet_id');
-        $outlet   = Outlet::findOrFail($outletId);
-        $search   = $request->query('search');
-        $category = $request->query('category');
 
-        // Ambil menu yang tersedia di outlet, dengan filter opsional
-        $menus = Menu::where('outlet_id', $outletId)
-            ->where('is_available', true)
-            ->when($search, fn($q) => $q->where('name', 'like', "%{$search}%"))
-            ->when($category, fn($q) => $q->where('category', $category))
-            ->get();
+{
+    $outletId = $request->query('outlet_id');
+    $outlet   = Outlet::findOrFail($outletId);
 
-        // Ambil daftar kategori yang tersedia untuk filter
-        $categories = Menu::where('outlet_id', $outletId)->distinct()->pluck('category');
+    $search   = $request->query('search');
+    $category = $request->query('category');
+    $sort     = $request->query('sort');
 
-        return view('dine-in.menu', compact('outlet', 'menus', 'categories', 'search', 'category'));
-    }
+    $menus = Menu::where('outlet_id', $outletId)
+        ->where('is_available', true)
+        ->when($search, fn($q) => $q->where('name', 'like', "%{$search}%"))
+        ->when($category, fn($q) => $q->where('category', $category))
+        ->when($sort === 'price_asc', fn($q) => $q->orderBy('price', 'asc'))
+        ->when($sort === 'price_desc', fn($q) => $q->orderBy('price', 'desc'))
+        ->when($sort === 'name_asc', fn($q) => $q->orderBy('name', 'asc'))
+        ->when($sort === 'name_desc', fn($q) => $q->orderBy('name', 'desc'))
+        ->get();
+
+    $categories = Menu::where('outlet_id', $outletId)
+        ->distinct()
+        ->pluck('category');
+
+    return view(
+        'dine-in.menu',
+        compact(
+            'outlet',
+            'menus',
+            'categories',
+            'search',
+            'category',
+            'sort'
+        )
+    );
+}
 
     /**
      * Menampilkan halaman keranjang belanja untuk alur dine-in.
