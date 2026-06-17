@@ -1,4 +1,6 @@
-﻿<x-app-layout>
+﻿ini adalah track.blade.php
+
+<x-app-layout>
     <x-slot name="header">
         <h2>Tracking Delivery #{{ $order->id }}</h2>
     </x-slot>
@@ -25,9 +27,44 @@
                 @endphp
 
                 <div class="status-heading">
-                    <div class="status-label">{{ $statusInfo[$order->status] ?? ucfirst($order->status) }}</div>
-                    <div class="status-sub">{{ $order->outlet->name }}</div>
-                </div>
+     <div class="status-label">{{ $statusInfo[$order->status] ?? ucfirst($order->status) }}</div>
+     <div class="status-sub">{{ $order->outlet->name }}</div>
+</div>
+
+@php
+    $estimate = match($order->status) {
+        'pending'          => 50,
+        'confirmed'        => 40,
+        'processing'       => 30,
+        'out_for_delivery' => 15,
+        default            => 0,
+    };
+@endphp
+
+@if($estimate > 0)
+<div style="
+    margin-top:16px;
+    padding:14px;
+    background:#e3f2fd;
+    border-left:4px solid #1976d2;
+    border-radius:8px;
+">
+    <div style="
+        font-weight:700;
+        color:#1976d2;
+        margin-bottom:4px;
+    ">
+        ⏱️ Estimasi Waktu Pesanan
+    </div>
+
+    <div style="
+        font-size:15px;
+        color:#333;
+    ">
+        Sekitar <strong>{{ $estimate }} menit lagi</strong>
+    </div>
+</div>
+@endif
 
                 {{-- Progress Steps --}}
                 @php
@@ -190,3 +227,4 @@
 
     </div>
 </x-app-layout>
+
