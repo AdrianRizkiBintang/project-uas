@@ -185,6 +185,27 @@
                             @endfor
                         </div>
                     </div>
+
+                    {{-- Tip Driver --}}
+<div class="form-group">
+    <label class="form-label">Tip untuk Driver (Opsional)</label>
+
+    <div class="d-flex flex-wrap gap-8">
+        <label><input type="radio" name="tip_amount" value="0" checked> Tidak Ada</label>
+        <label><input type="radio" name="tip_amount" value="5000"> Rp5.000</label>
+        <label><input type="radio" name="tip_amount" value="10000"> Rp10.000</label>
+        <label><input type="radio" name="tip_amount" value="20000"> Rp20.000</label>
+        <label><input type="radio" name="tip_amount" value="custom"> Custom</label>
+    </div>
+
+    <input
+        type="number"
+        name="custom_tip"
+        min="0"
+        class="form-input mt-8"
+        placeholder="Masukkan nominal tip">
+</div>
+
                     <div class="form-group">
                         <label class="form-label" for="comments">Komentar (opsional)</label>
                         <textarea id="comments" name="comments" class="form-textarea"
@@ -214,6 +235,21 @@
                     </div>
                 </div>
                 @endif
+                @if($order->tip_amount > 0)
+<div class="mb-8">
+    <div class="text-sm font-bold mb-4">Tip Driver</div>
+    <div style="
+        background:#e8f5e9;
+        color:#2e7d32;
+        padding:10px 14px;
+        border-radius:8px;
+        display:inline-block;
+        font-weight:700;
+    ">
+        💰 Rp {{ number_format($order->tip_amount, 0, ',', '.') }}
+    </div>
+</div>
+@endif
                 @if($order->review->comments)
                     <p class="text-muted">{{ $order->review->comments }}</p>
                 @endif
