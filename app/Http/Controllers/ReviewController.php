@@ -15,8 +15,10 @@ class ReviewController extends Controller
         abort_if($order->review()->exists(), 422);
 
         $rules = [
-            'rating'   => 'required|integer|min:1|max:5',
-            'comments' => 'nullable|string|max:1000',
+            'rating'      => 'required|integer|min:1|max:5',
+            'comments'    => 'nullable|string|max:1000',
+            'tip_amount'  => 'nullable',
+            'custom_tip'  => 'nullable|integer|min:0|max:100000',
         ];
 
         if ($order->type === 'delivery') {
@@ -25,11 +27,30 @@ class ReviewController extends Controller
 
         $validated = $request->validate($rules);
 
-        Review::create(array_merge($validated, [
-            'order_id' => $order->id,
-            'user_id'  => auth()->id(),
-        ]));
+        // Hitung tip
+        $tipAmount = 0;
 
-        return redirect()->route('profile.history')->with('success', 'Ulasan berhasil dikirim.');
+        if (($validated['tip_amount'] ?? null) === 'custom') {
+            $tipAmount = $validated['custom_tip'] ?? 0;
+        } else {
+            $tipAmount = (int) ($validated['tip_amount'] ?? 0);
+        }
+
+        Review::create([
+            'order_id'       => $order->id,
+            'user_id'        => auth()->id(),
+            'rating'         => $validated['rating'],
+            'courier_rating' => $validated['courier_rating'] ?? null,
+            'comments'       => $validated['comments'] ?? null,
+        ]);
+
+        // Simpan tip ke order
+        $order->update([
+            'tip_amount' => $tipAmount,
+        ]);
+
+        return redirect()
+            ->route('profile.history')
+            ->with('success', 'Ulasan berhasil dikirim.');
     }
 }
