@@ -58,6 +58,25 @@
                 </div>
             </div>
 
+            {{-- Promo Code --}}
+            <div class="card mb-20">
+                <div class="card-header">Kode Promo</div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="form-label">Punya kode promo? (opsional)</label>
+                        <input type="text" id="promo_code_preview" value="{{ old('promo_code') }}"
+                               class="form-input" placeholder="Masukkan kode promo" list="promo-list-dinein">
+                        <datalist id="promo-list-dinein">
+                            @foreach($promos as $promo)
+                                <option value="{{ $promo->code }}">
+                                    {{ $promo->discount_type === 'percentage' ? $promo->discount_value.'%' : 'Rp '.number_format($promo->discount_value,0,',','.') }}
+                                </option>
+                            @endforeach
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+
             {{-- Checkout --}}
             <div class="card mb-20">
                 <div class="card-header">Detail Pembayaran</div>
@@ -65,6 +84,7 @@
                     <form method="POST" action="{{ route('dine-in.checkout') }}">
                         @csrf
                         <input type="hidden" name="outlet_id" value="{{ $outlet?->id ?? session('cart_outlet_id') }}">
+                        <input type="hidden" name="promo_code" id="promo_code_hidden" value="">
 
                         <div class="form-group">
                             <label class="form-label">Metode Pembayaran</label>
@@ -90,6 +110,18 @@
             </div>
 
         @endif
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const promoInput = document.getElementById('promo_code_preview');
+            const promoHidden = document.getElementById('promo_code_hidden');
+            if (promoInput && promoHidden) {
+                promoInput.addEventListener('input', function () {
+                    promoHidden.value = this.value;
+                });
+            }
+        });
+    </script>
 
     </div>
 </x-app-layout>
