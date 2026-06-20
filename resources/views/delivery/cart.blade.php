@@ -127,6 +127,13 @@
                                       placeholder="Misal: tidak pedas...">{{ old('notes') }}</textarea>
                         </div>
 
+                        {{-- Driver Notes --}}
+<div class="form-group">
+    <label class="form-label" for="driver_notes">Pesan untuk Driver (opsional)</label>
+    <textarea id="driver_notes" name="driver_notes" class="form-textarea"
+              placeholder="Misal: telepon saat sampai atau masuk lewat gerbang belakang">{{ old('driver_notes') }}</textarea>
+</div>
+
                         <button type="submit" class="btn btn-blue btn-full btn-lg">Konfirmasi Pesanan</button>
                     </form>
                 </div>
