@@ -117,35 +117,35 @@
                 @endif
 
                 <div class="menu-card-price">
-                    Rp {{ number_format($menu->price, 0, ',', '.') }}
-                </div>
+    Rp {{ number_format($menu->price, 0, ',', '.') }}
+</div>
 
-                <form method="POST" action="{{ route('cart.add') }}" class="menu-add-form">
-                    @csrf
+<form method="POST" action="{{ route('cart.add') }}" class="menu-add-form">
+    @csrf
 
-                    <input type="hidden" name="menu_id" value="{{ $menu->id }}">
-                    <input type="hidden" name="outlet_id" value="{{ $outlet->id }}">
-                    <input type="hidden" name="order_type" value="dine_in">
+    <input type="hidden" name="menu_id" value="{{ $menu->id }}">
+    <input type="hidden" name="outlet_id" value="{{ $outlet->id }}">
+    <input type="hidden" name="order_type" value="dine_in">
 
-                    <input type="number"
-                           name="quantity"
-                           value="1"
-                           min="1"
-                           class="qty-input">
+    <input type="number"
+           name="quantity"
+           value="1"
+           min="1"
+           class="qty-input">
 
-                    <button type="submit" class="btn btn-primary btn-sm flex-1">
-                        + Tambah
-                    </button>
-                </form>
+    <button type="submit" class="btn btn-primary btn-sm flex-1">
+        + Tambah
+    </button>
+</form>
 
-                {{-- Wishlist sementara dimatikan untuk testing sorting
-                <form method="POST" action="{{ route('wishlist.toggle', $menu) }}" class="mt-8">
-                    @csrf
-                    <button type="submit" class="btn btn-secondary btn-sm flex-1">
-                        Wishlist
-                    </button>
-                </form>
-                --}}
+<form method="POST" action="{{ route('wishlist.toggle', $menu) }}" class="mt-8">
+    @csrf
+
+    <button type="submit" class="btn btn-secondary btn-sm flex-1">
+        🤍 Wishlist
+    </button>
+</form>
+
             </div>
         </div>
         @endforeach
@@ -153,6 +153,4 @@
     @endif
 
 </div>
-```
-
 </x-app-layout>

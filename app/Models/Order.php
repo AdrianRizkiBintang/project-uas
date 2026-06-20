@@ -23,9 +23,7 @@ class Order extends Model
         'payment_status',
         'total_amount',
         'discount_amount',
-        'tip_amount',
         'notes',
-        'driver_notes',
         'delivery_address_id',
         'promo_id',
     ];
@@ -38,7 +36,6 @@ class Order extends Model
     protected $casts = [
         'total_amount'    => 'decimal:2',
         'discount_amount' => 'decimal:2',
-        'tip_amount'      => 'decimal:2',
     ];
 
     /**
