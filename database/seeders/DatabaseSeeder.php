@@ -71,6 +71,19 @@ class DatabaseSeeder extends Seeder
                 ['name' => 'Onion Rings',           'description' => 'Bawang bombay goreng tepung crispy.',             'price' => 22000, 'category' => 'Snack',    'is_available' => true],
                 ['name' => 'Vanilla Milkshake',     'description' => 'Milkshake vanilla creamy, dingin menyegarkan.',   'price' => 28000, 'category' => 'Beverage', 'is_available' => true],
                 ['name' => 'Cola Float',            'description' => 'Soda cola dengan es krim vanilla mengambang.',    'price' => 20000, 'category' => 'Beverage', 'is_available' => true],
+                ['name' => 'Cheese Burger', 'description' => 'Beef patty dengan keju leleh premium.', 'price' => 45000, 'category' => 'Burger', 'is_available' => true],
+                ['name' => 'Mushroom Burger', 'description' => 'Burger dengan saus jamur creamy.', 'price' => 50000, 'category' => 'Burger', 'is_available' => true],
+                ['name' => 'Spicy Jalapeno Burger', 'description' => 'Burger pedas dengan jalapeno segar.', 'price' => 52000, 'category' => 'Burger', 'is_available' => true],
+                ['name' => 'Triple Beef Burger', 'description' => 'Tiga lapis beef patty juicy.', 'price' => 75000, 'category' => 'Burger', 'is_available' => true],
+
+                ['name' => 'Loaded Fries', 'description' => 'Kentang goreng dengan keju dan saus spesial.', 'price' => 30000, 'category' => 'Snack', 'is_available' => true],
+                ['name' => 'Chicken Nuggets', 'description' => 'Nugget ayam crispy.', 'price' => 25000, 'category' => 'Snack', 'is_available' => true],
+                ['name' => 'Mozzarella Stick', 'description' => 'Keju mozzarella goreng.', 'price' => 28000, 'category' => 'Snack', 'is_available' => true],
+
+                ['name' => 'Chocolate Milkshake', 'description' => 'Milkshake coklat premium.', 'price' => 30000, 'category' => 'Beverage', 'is_available' => true],
+                ['name' => 'Strawberry Milkshake', 'description' => 'Milkshake strawberry segar.', 'price' => 30000, 'category' => 'Beverage', 'is_available' => true],
+                ['name' => 'Iced Lemon Tea', 'description' => 'Teh lemon dingin.', 'price' => 18000, 'category' => 'Beverage', 'is_available' => true],
+                ['name' => 'Mineral Water', 'description' => 'Air mineral botol.', 'price' => 10000, 'category' => 'Beverage', 'is_available' => true],
             ];
 
             foreach ($menus as $menuData) {
@@ -203,6 +216,13 @@ for ($i = 1; $i <= 50; $i++) {
         'payment_status' => rand(0, 1) ? 'paid' : 'unpaid',
         'total_amount' => 0,
         'discount_amount' => $selectedPromo ? 10000 : 0,
+        'tip_amount' => rand(0, 1)
+         ? rand(5000, 20000)
+        : 0,
+
+        'driver_notes' => rand(0, 1)
+         ? 'Mohon hubungi saat sampai'
+        : null,
         'notes' => rand(0, 1)
             ? 'Tolong jangan terlalu pedas'
             : null,

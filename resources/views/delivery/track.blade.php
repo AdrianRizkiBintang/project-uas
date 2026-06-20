@@ -1,6 +1,4 @@
-﻿ini adalah track.blade.php
-
-<x-app-layout>
+﻿<x-app-layout>
     <x-slot name="header">
         <h2>Tracking Delivery #{{ $order->id }}</h2>
     </x-slot>

@@ -93,9 +93,7 @@
                     {{ ucfirst($menu->category) }}
                 </div>
 
-                <div class="menu-card-name">
-                    {{ $menu->name }}
-                </div>
+                
 
                 <div class="menu-card-name">{{ $menu->name }}</div>
                     @php $avgRating = $menu->averageRating(); $reviewCount = $menu->reviewCount(); @endphp
