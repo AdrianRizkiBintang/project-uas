@@ -17,20 +17,28 @@
     </span>
 
     <div class="flex items-center gap-6 text-sm">
-        <a href="{{ route('manager.dashboard') }}" class="hover:text-orange-400">Dashboard</a>
-        @if(auth()->user()->isOwner() || auth()->user()->isManager())
-            <a href="{{ route('manager.menu.index') }}" class="hover:text-orange-400">Menu</a>
-            <a href="{{ route('manager.outlet.index') }}" class="hover:text-orange-400">Outlet</a>
-            <a href="{{ route('manager.promo.index') }}" class="hover:text-orange-400">Promo</a>
-            <a href="{{ route('manager.user.index') }}" class="hover:text-orange-400">Users</a>
-        @endif
-        <a href="{{ route('manager.order.index') }}" class="hover:text-orange-400">Pesanan</a>
-        <a href="{{ route('home') }}" class="hover:text-orange-400">← Ke Web</a>
-        <form method="POST" action="{{ route('logout') }}" class="inline">
-            @csrf
-            <button class="hover:text-red-400">Keluar</button>
-        </form>
-    </div>
+    <a href="{{ route('manager.dashboard') }}" class="hover:text-orange-400">Dashboard</a>
+
+    @if(auth()->user()->isOwner() || auth()->user()->isManager())
+        <a href="{{ route('manager.menu.index') }}" class="hover:text-orange-400">Menu</a>
+        <a href="{{ route('manager.outlet.index') }}" class="hover:text-orange-400">Outlet</a>
+        <a href="{{ route('manager.promo.index') }}" class="hover:text-orange-400">Promo</a>
+        <a href="{{ route('manager.user.index') }}" class="hover:text-orange-400">Users</a>
+    @endif
+
+    <a href="{{ route('manager.order.index') }}" class="hover:text-orange-400">Pesanan</a>
+
+    <a href="{{ route('manager.revenue') }}" class="hover:text-orange-400">
+        Pendapatan Harian
+    </a>
+
+    <a href="{{ route('home') }}" class="hover:text-orange-400">← Ke Web</a>
+
+    <form method="POST" action="{{ route('logout') }}" class="inline">
+        @csrf
+        <button class="hover:text-red-400">Keluar</button>
+    </form>
+</div>
 </nav>
 
 <main class="max-w-7xl mx-auto p-6">

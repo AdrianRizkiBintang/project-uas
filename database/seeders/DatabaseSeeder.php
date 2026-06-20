@@ -207,13 +207,19 @@ for ($i = 1; $i <= 50; $i++) {
         ? $promos->random()
         : null;
 
+    $orderDate = now()->subDays(rand(0, 14));
+
     $order = Order::create([
         'user_id' => $customer->id,
         'outlet_id' => $outlet->id,
         'type' => $type,
         'status' => $statuses[array_rand($statuses)],
         'payment_method' => rand(0, 1) ? 'cash' : 'qris',
-        'payment_status' => rand(0, 1) ? 'paid' : 'unpaid',
+        'payment_status' => rand(1, 100) <= 80 ? 'paid' : 'unpaid',
+
+        'created_at' => $orderDate,
+        'updated_at' => $orderDate,
+
         'total_amount' => 0,
         'discount_amount' => $selectedPromo ? 10000 : 0,
         'tip_amount' => rand(0, 1)
