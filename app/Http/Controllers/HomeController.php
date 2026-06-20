@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Menu;
+use App\Models\OrderItem;
 use App\Models\Outlet;
 use App\Models\Promo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -18,6 +21,19 @@ class HomeController extends Controller
             })
             ->get();
 
-        return view('home.index', compact('outlets', 'promos'));
+        $bestSellerIds = OrderItem::select('menu_id', DB::raw('SUM(quantity) as total_sold'))
+            ->groupBy('menu_id')
+            ->orderByDesc('total_sold')
+            ->limit(5)
+            ->pluck('menu_id');
+
+        $bestSellers = Menu::whereIn('id', $bestSellerIds)
+            ->where('is_available', true)
+            ->with('outlet')
+            ->get()
+            ->sortBy(fn($menu) => array_search($menu->id, $bestSellerIds->toArray()))
+            ->values();
+
+        return view('home.index', compact('outlets', 'promos', 'bestSellers'));
     }
 }
