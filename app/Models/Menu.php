@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Review;
 
 class Menu extends Model
 {
@@ -49,6 +50,20 @@ class Menu extends Model
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function averageRating(): float
+    {
+        return (float) Review::whereHas('order.items', function ($q) {
+            $q->where('menu_id', $this->id);
+        })->avg('rating') ?? 0;
+    }
+
+    public function reviewCount(): int
+    {
+        return Review::whereHas('order.items', function ($q) {
+            $q->where('menu_id', $this->id);
+        })->count();
     }
 
     public function wishlistedBy()

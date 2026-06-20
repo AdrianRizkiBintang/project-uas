@@ -87,6 +87,19 @@
                     {{ $menu->name }}
                 </div>
 
+                <div class="menu-card-name">{{ $menu->name }}</div>
+                    @php $avgRating = $menu->averageRating(); $reviewCount = $menu->reviewCount(); @endphp
+                    @if($reviewCount > 0)
+                    <div style="color:#f9a825;font-size:13px;margin-bottom:4px;">
+                        @for($i = 1; $i <= 5; $i++)
+                            @if($i <= round($avgRating))&#9733;@else<span style="color:#ddd;">&#9733;</span>@endif
+                        @endfor
+                        <span style="color:#888;margin-left:4px;">({{ $reviewCount }})</span>
+                    </div>
+                    @else
+                    <div style="color:#bbb;font-size:12px;margin-bottom:4px;">Belum ada rating</div>
+                    @endif
+
                 @if($menu->description)
                     <div class="menu-card-desc">
                         {{ Str::limit($menu->description, 60) }}
