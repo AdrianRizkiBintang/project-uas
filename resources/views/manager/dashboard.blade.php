@@ -21,7 +21,6 @@
         <p class="text-gray-500 text-sm mt-1">Total Customer</p>
     </div>
 </div>
-
 <div class="bg-white rounded-xl shadow-sm p-4">
     <h2 class="font-semibold text-lg mb-4">Pesanan Terbaru</h2>
     <table class="w-full text-sm">

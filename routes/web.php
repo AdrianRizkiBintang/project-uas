@@ -101,6 +101,12 @@ Route::middleware(['auth', 'role:owner,manager,karyawan'])
         Route::get('/orders', [ManagerOrder::class, 'index'])->name('order.index');
         Route::get('/orders/{order}', [ManagerOrder::class, 'show'])->name('order.show');
         Route::patch('/orders/{order}/status/{status}', [ManagerOrder::class, 'updateStatus'])->name('order.status');
+
+        Route::get('/revenue', [ManagerDashboard::class, 'revenue'])
+            ->name('revenue');
+        
+        Route::get('/revenue', [ManagerDashboard::class, 'revenue'])
+            ->name('revenue');
     });
 
 require __DIR__ . '/auth.php';
