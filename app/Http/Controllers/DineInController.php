@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Outlet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Promo;
 
 class DineInController extends Controller
 {
@@ -61,19 +62,22 @@ class DineInController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\View\View
      */
-    public function cart(Request $request)
+   public function cart(Request $request)
     {
-        // Ambil data keranjang dari session
         $cart   = session('cart', []);
         $outlet = null;
 
-        // Jika keranjang tidak kosong, ambil data outlet terkait
         if (!empty($cart)) {
             $outletId = session('cart_outlet_id');
             $outlet   = Outlet::find($outletId);
         }
 
-        return view('dine-in.cart', compact('cart', 'outlet'));
+        $promos = Promo::where('is_active', true)
+            ->where(function ($q) {
+                $q->whereNull('expiration_date')->orWhere('expiration_date', '>', now());
+            })->get();
+
+        return view('dine-in.cart', compact('cart', 'outlet', 'promos'));
     }
 
     /**
@@ -84,47 +88,56 @@ class DineInController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function checkout(Request $request)
+   public function checkout(Request $request)
     {
-        // Validasi input checkout
         $validated = $request->validate([
             'outlet_id'      => 'required|exists:outlets,id',
             'payment_method' => 'required|in:cash,qris',
             'notes'          => 'nullable|string|max:500',
+            'promo_code'     => 'nullable|string',
         ]);
 
         $cart = session('cart', []);
-
-        // Batalkan jika keranjang kosong
         if (empty($cart)) {
             return back()->withErrors(['cart' => 'Keranjang kosong.']);
         }
 
+        $promo = null;
+        if (!empty($validated['promo_code'])) {
+            $promo = Promo::where('code', $validated['promo_code'])->first();
+            if (!$promo || !$promo->isValid()) {
+                return back()->withErrors(['promo_code' => 'Kode promo tidak valid atau sudah kadaluarsa.']);
+            }
+        }
+
         $order = null;
-
-        // Gunakan transaksi DB agar order dan item tersimpan atomik
-        DB::transaction(function () use ($validated, $cart, &$order) {
-
-            // Hitung total harga dari semua item di keranjang
-            $total = 0;
+        DB::transaction(function () use ($validated, $cart, $promo, &$order) {
+            $subtotal = 0;
             foreach ($cart as $item) {
-                $total += $item['price'] * $item['quantity'];
+                $subtotal += $item['price'] * $item['quantity'];
             }
 
-            // Buat record order baru
+            $discountAmount = 0;
+            if ($promo) {
+                $discountAmount = $promo->discount_type === 'percentage'
+                    ? $subtotal * ($promo->discount_value / 100)
+                    : min((float) $promo->discount_value, $subtotal);
+                $promo->increment('used_count');
+            }
+
             $order = Order::create([
-                'user_id'         => auth()->id(),
-                'outlet_id'       => $validated['outlet_id'],
-                'type'            => 'dine_in',
-                'status'          => 'pending',
-                'payment_method'  => $validated['payment_method'],
-                'payment_status'  => 'unpaid',
-                'total_amount'    => $total,
-                'discount_amount' => 0,
-                'notes'           => $validated['notes'] ?? null,
+                'user_id'        => auth()->id(),
+                'outlet_id'      => $validated['outlet_id'],
+                'type'           => 'dine_in',
+                'status'         => 'pending',
+                'payment_method' => $validated['payment_method'],
+                'payment_status' => 'unpaid',
+                'total_amount'   => max(0, $subtotal - $discountAmount),
+                'discount_amount'=> $discountAmount,
+                'notes'          => $validated['notes'] ?? null,
+                'promo_id'       => $promo?->id,
             ]);
 
-            // Simpan setiap item dari keranjang sebagai OrderItem
             foreach ($cart as $menuId => $item) {
                 $order->items()->create([
                     'menu_id'       => $menuId,
@@ -135,7 +148,6 @@ class DineInController extends Controller
             }
         });
 
-        // Hapus data keranjang dari session setelah checkout berhasil
         session()->forget(['cart', 'cart_outlet_id']);
 
         return redirect()->route('dine-in.track', $order);
