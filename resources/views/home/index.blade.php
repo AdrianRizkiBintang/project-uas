@@ -63,6 +63,32 @@
         </div>
         @endif
 
+        {{-- Menu Terlaris --}}
+        @if($bestSellers->isNotEmpty())
+        <div class="card mb-20">
+            <div class="card-header">🔥 Menu Terlaris</div>
+            <div class="card-body">
+                <div class="grid-3">
+                    @foreach($bestSellers as $menu)
+                    <div class="menu-card">
+                        @if($menu->image)
+                            <img src="{{ Storage::url($menu->image) }}" alt="{{ $menu->name }}" class="menu-card-img">
+                        @else
+                            <div class="menu-card-img-placeholder">Tidak ada gambar</div>
+                        @endif
+                        <div class="menu-card-body">
+                            <div class="menu-card-cat">{{ ucfirst($menu->category) }}</div>
+                            <div class="menu-card-name">{{ $menu->name }}</div>
+                            <div class="menu-card-desc">{{ $menu->outlet->name ?? '-' }}</div>
+                            <div class="menu-card-price">Rp {{ number_format($menu->price, 0, ',', '.') }}</div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        @endif
+
         {{-- Pilih Outlet Dine In --}}
         @if($outlets->isNotEmpty())
         <div id="pilih-outlet-dine" class="card mb-20">
@@ -94,6 +120,8 @@
             <div class="card-body text-center text-muted">Belum ada outlet yang tersedia saat ini.</div>
         </div>
         @endif
+
+        
 
     </div>
 </x-app-layout>
