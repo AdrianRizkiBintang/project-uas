@@ -17,7 +17,7 @@ class ReviewController extends Controller
         $rules = [
             'rating'      => 'required|integer|min:1|max:5',
             'comments'    => 'nullable|string|max:1000',
-            'tip_amount'  => 'nullable',
+            'tip_amount'  => 'nullable|string',
             'custom_tip'  => 'nullable|integer|min:0|max:100000',
         ];
 
@@ -30,10 +30,10 @@ class ReviewController extends Controller
         // Hitung tip
         $tipAmount = 0;
 
-        if (($validated['tip_amount'] ?? null) === 'custom') {
-            $tipAmount = $validated['custom_tip'] ?? 0;
+        if (($validated['tip_amount'] ?? '0') === 'custom') {
+            $tipAmount = (int) ($request->custom_tip ?? 0);
         } else {
-            $tipAmount = (int) ($validated['tip_amount'] ?? 0);
+        $tipAmount = (int) ($validated['tip_amount'] ?? 0);
         }
 
         Review::create([
