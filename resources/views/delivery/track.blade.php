@@ -94,6 +94,15 @@
                 </div>
                 @endif
 
+                @if($order->driver_notes)
+<div class="delivery-addr-box">
+    <div class="delivery-addr-label">Pesan untuk Driver</div>
+    <div class="delivery-addr-text">
+        {{ $order->driver_notes }}
+    </div>
+</div>
+@endif
+
                 {{-- Items --}}
                 <div class="items-list mb-16">
                     @foreach($order->items as $item)

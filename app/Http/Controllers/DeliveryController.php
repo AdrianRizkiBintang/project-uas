@@ -134,6 +134,7 @@ class DeliveryController extends Controller
             'delivery_address_id' => 'required|exists:user_addresses,id',
             'payment_method'      => 'required|in:cash,qris',
             'notes'               => 'nullable|string|max:500',
+            'driver_notes'        => 'nullable|string|max:500',
             'promo_code'          => 'nullable|string',
         ]);
 
@@ -190,6 +191,7 @@ class DeliveryController extends Controller
                 'total_amount'        => max(0, $subtotal - $discountAmount),
                 'discount_amount'     => $discountAmount,
                 'notes'               => $validated['notes'] ?? null,
+                'driver_notes'        => $validated['driver_notes'] ?? null,
                 'delivery_address_id' => $validated['delivery_address_id'],
                 'promo_id'            => $promo?->id,
             ]);
