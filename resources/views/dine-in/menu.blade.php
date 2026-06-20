@@ -93,9 +93,20 @@
                     {{ ucfirst($menu->category) }}
                 </div>
 
-                <div class="menu-card-name">
-                    {{ $menu->name }}
-                </div>
+                
+
+                <div class="menu-card-name">{{ $menu->name }}</div>
+                    @php $avgRating = $menu->averageRating(); $reviewCount = $menu->reviewCount(); @endphp
+                    @if($reviewCount > 0)
+                    <div style="color:#f9a825;font-size:13px;margin-bottom:4px;">
+                        @for($i = 1; $i <= 5; $i++)
+                            @if($i <= round($avgRating))&#9733;@else<span style="color:#ddd;">&#9733;</span>@endif
+                        @endfor
+                        <span style="color:#888;margin-left:4px;">({{ $reviewCount }})</span>
+                    </div>
+                    @else
+                    <div style="color:#bbb;font-size:12px;margin-bottom:4px;">Belum ada rating</div>
+                    @endif
 
                 @if($menu->description)
                     <div class="menu-card-desc">
@@ -104,35 +115,35 @@
                 @endif
 
                 <div class="menu-card-price">
-                    Rp {{ number_format($menu->price, 0, ',', '.') }}
-                </div>
+    Rp {{ number_format($menu->price, 0, ',', '.') }}
+</div>
 
-                <form method="POST" action="{{ route('cart.add') }}" class="menu-add-form">
-                    @csrf
+<form method="POST" action="{{ route('cart.add') }}" class="menu-add-form">
+    @csrf
 
-                    <input type="hidden" name="menu_id" value="{{ $menu->id }}">
-                    <input type="hidden" name="outlet_id" value="{{ $outlet->id }}">
-                    <input type="hidden" name="order_type" value="dine_in">
+    <input type="hidden" name="menu_id" value="{{ $menu->id }}">
+    <input type="hidden" name="outlet_id" value="{{ $outlet->id }}">
+    <input type="hidden" name="order_type" value="dine_in">
 
-                    <input type="number"
-                           name="quantity"
-                           value="1"
-                           min="1"
-                           class="qty-input">
+    <input type="number"
+           name="quantity"
+           value="1"
+           min="1"
+           class="qty-input">
 
-                    <button type="submit" class="btn btn-primary btn-sm flex-1">
-                        + Tambah
-                    </button>
-                </form>
+    <button type="submit" class="btn btn-primary btn-sm flex-1">
+        + Tambah
+    </button>
+</form>
 
-                {{-- Wishlist sementara dimatikan untuk testing sorting
-                <form method="POST" action="{{ route('wishlist.toggle', $menu) }}" class="mt-8">
-                    @csrf
-                    <button type="submit" class="btn btn-secondary btn-sm flex-1">
-                        Wishlist
-                    </button>
-                </form>
-                --}}
+<form method="POST" action="{{ route('wishlist.toggle', $menu) }}" class="mt-8">
+    @csrf
+
+    <button type="submit" class="btn btn-secondary btn-sm flex-1">
+        🤍 Wishlist
+    </button>
+</form>
+
             </div>
         </div>
         @endforeach
@@ -140,6 +151,4 @@
     @endif
 
 </div>
-```
-
 </x-app-layout>
