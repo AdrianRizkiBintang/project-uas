@@ -15,8 +15,19 @@ class ProfileController extends Controller
 {
     public function edit(Request $request): View
     {
+        $user = $request->user();
+
+        $totalOrders = $user->orders()->count();
+        $totalSpent = $user->orders()->sum('total_amount');
+        $totalReviews = $user->reviews()->count();
+        $totalWishlists = $user->wishlists()->count();
+
         return view('profile.edit', [
-            'user' => $request->user(),
+            'user' => $user,
+            'totalOrders' => $totalOrders,
+            'totalSpent' => $totalSpent,
+            'totalReviews' => $totalReviews,
+            'totalWishlists' => $totalWishlists,
         ]);
     }
 
@@ -117,3 +128,4 @@ class ProfileController extends Controller
         );
     }
 }
+
