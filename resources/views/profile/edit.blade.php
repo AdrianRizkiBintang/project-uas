@@ -5,6 +5,59 @@
 
     <div class="container-sm">
 
+        {{-- Statistik Akun --}}
+        <div class="profile-section mb-24">
+            <div class="profile-section-header">
+                Statistik Akun
+            </div>
+
+            <div class="profile-section-body">
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px">
+
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div style="font-size:28px">📦</div>
+                            <div style="font-size:24px;font-weight:700">
+                                {{ $totalOrders }}
+                            </div>
+                            <div>Total Pesanan</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div style="font-size:28px">💰</div>
+                            <div style="font-size:24px;font-weight:700">
+                                Rp {{ number_format($totalSpent, 0, ',', '.') }}
+                            </div>
+                            <div>Total Pengeluaran</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div style="font-size:28px">⭐</div>
+                            <div style="font-size:24px;font-weight:700">
+                                {{ $totalReviews }}
+                            </div>
+                            <div>Total Review</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div style="font-size:28px">❤</div>
+                            <div style="font-size:24px;font-weight:700">
+                                {{ $totalWishlists }}
+                            </div>
+                            <div>Total Wishlist</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
         <div class="profile-section mb-24">
             <div class="profile-section-header">Informasi Profil</div>
             <div class="profile-section-body">
@@ -28,3 +81,4 @@
 
     </div>
 </x-app-layout>
+
